@@ -1,14 +1,15 @@
+import { makeAutoObservable } from "mobx";
+
 interface HashTable<T> {
   [key: number]: T;
 }
 
 export class CustomArray<T> {
-  public length: number;
-  private data: HashTable<T>;
+  public length: number = 0;
+  private data: { [key: number]: T } = {};
 
   constructor() {
-    this.length = 0;
-    this.data = {} as HashTable<T>;
+    makeAutoObservable(this);
   }
 
   push(item: T): number {
@@ -19,7 +20,6 @@ export class CustomArray<T> {
 
   pop(): T | undefined {
     if (this.length === 0) return undefined;
-
     const lastItem = this.data[this.length - 1];
     delete this.data[this.length - 1];
     this.length--;
@@ -46,10 +46,5 @@ export class CustomArray<T> {
     this.length++;
     return this.data;
   }
-
-  toArray(): T[] {
-    return Array.from({ length: this.length }, (_, i) => this.get(i) as T);
-  }
-
-  // You can add more methods as needed, e.g., 'delete', 'indexOf', etc.
+  // you can add more methods ...
 }

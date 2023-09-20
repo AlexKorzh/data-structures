@@ -14,29 +14,84 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  text-align: center;
+}
+
+.App, #root, body, html {
+  height: 100%;
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.items-container {
+  margin-top: 80px;
+  display: flex;
+}
+
+.array-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #1a1a1a;
+  transition: transform 0.3s, opacity 0.3s;
+  position: relative;
+  animation: slideIn 0.3s forwards;
+  transform: scale(1);
+  opacity: 1;
+}
+
+.array-item:not(:last-child) {
+  border-top: 2px solid #646cff;
+  border-right: 2px solid #646cff;
+  border-bottom: 2px solid #646cff;
+}
+
+.array-item:last-child {
+  border-top: 2px solid #646cff;
+  border-bottom: 2px solid #646cff;
+  border-right: 2px solid #646cff;
+}
+
+.array-item:first-child {
+  border: 2px solid #646cff;
+}
+
+.array-item:before {
+  content: attr(data-index);
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8em;
+  color: #fff;
+  background: #646cff;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.methods-group {
+  text-align: center;
+}
+
+.buttons-group {
+  margin: 0 auto;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 button {
+  display: inline-flex;
+  margin-bottom: 8px;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -47,9 +102,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -64,6 +121,37 @@ button:focus-visible {
     color: #747bff;
   }
   button {
+    background-color: #ececec;
+  }
+
+  .array-item {
     background-color: #f9f9f9;
   }
+}
+
+/* Animation for added item */
+@keyframes slideIn {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+@keyframes scaleDown {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+.scaledDown {
+  animation: scaleDown 0.3s forwards;
 }
