@@ -15,6 +15,7 @@ export class CustomArray<T> {
   push(item: T): number {
     this.data[this.length] = item;
     this.length++;
+
     return this.length;
   }
 
@@ -23,7 +24,23 @@ export class CustomArray<T> {
     const lastItem = this.data[this.length - 1];
     delete this.data[this.length - 1];
     this.length--;
+
     return lastItem;
+  }
+
+  shift(): T | undefined {
+    if (this.length === 0) return undefined;
+    // 1. save first item
+    const firstItem = this.data[0];
+    // 2. move elements one position left
+    for (let i = 0; i < this.length - 1; i++) {
+      this.data[i] = this.data[i + 1];
+    }
+    // 3. delete the last item
+    delete this.data[this.length - 1];
+    this.length--;
+
+    return firstItem;
   }
 
   get(index: number): T | undefined {
@@ -44,6 +61,7 @@ export class CustomArray<T> {
     // Insert the new item
     this.data[index] = item;
     this.length++;
+
     return this.data;
   }
   // you can add more methods ...

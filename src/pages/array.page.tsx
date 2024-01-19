@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import classNames from 'classnames';
 import { CustomArray } from '../array';
 import { useState } from 'react';
 
@@ -9,6 +10,7 @@ array.push(3);
 
 export const ArrayPage = observer(() => {
   const [poppedIndexes, setPoppedIndexes] = useState<number[]>([]);
+  const [shiftedIndexes, setShiftedIndexes] = useState<number[]>([]);
 
   const onPushBtnClick = () => {
     const newItem = array.length + 1;
@@ -25,15 +27,27 @@ export const ArrayPage = observer(() => {
     }, 300);
   };
 
+  const onShiftBtnClick = () => {
+    setShiftedIndexes([...shiftedIndexes, 0]);
+
+    setTimeout(() => {
+      array.shift();
+      setShiftedIndexes(prevIndexes => prevIndexes.filter(i => i !== 0));
+    }, 300);
+  };
+
   return (
     <div>
       <h1>Custom Array Demo</h1>
       <div className="items-container">
         {Array.from({ length: array.length }).map((_, i) => (
           <div
-            className={`array-item ${poppedIndexes.includes(i) ? 'scaledDown' : ''}`}
+            className={classNames('array-item', {
+              'scaledDown': poppedIndexes.includes(i),
+              'shiftLeft': shiftedIndexes.includes(i),
+            })}
             data-index={i}
-            key={array.get(i)}
+            key={i + '-' + array.get(i)}
           >
             <span>{array.get(i)}</span>
           </div>
@@ -44,6 +58,7 @@ export const ArrayPage = observer(() => {
         <div className="buttons-group">
           <button onClick={onPushBtnClick}>Push {array.length + 1}</button>
           <button onClick={onPopBtnClick}>Pop {array.length}</button>
+          <button onClick={onShiftBtnClick}>Shift {array.length}</button>
         </div>
       </div>
     </div>
