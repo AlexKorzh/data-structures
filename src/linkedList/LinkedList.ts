@@ -1,6 +1,6 @@
-class NodeItem {
+class Node {
   value: any;
-  next: NodeItem | null;
+  next: Node | null;
 
   constructor(val: any) {
     this.value = val;
@@ -9,8 +9,8 @@ class NodeItem {
 }
 
 export class SinglyLinkedList {
-  head: NodeItem | null;
-  tail: NodeItem | null;
+  head: Node | null;
+  tail: Node | null;
   length: number;
 
   constructor() {
@@ -20,18 +20,19 @@ export class SinglyLinkedList {
   }
 
   push(value: any) {
-    const newNode = new NodeItem(value);
+    const newNode = new Node(value);
 
     if (!this.head) {
       this.head = newNode;
       this.tail = this.head;
     } else {
-      if (this.tail) {
+      if (this.tail !== null) {
         this.tail.next = newNode;
+        this.tail = newNode;
       }
-      this.tail = newNode;
     }
-    this.length = this.length + 1;
+    
+    this.length++;
 
     return this;
   }
